@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+
+# Output directories
+dist/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# IDE/Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+
+# Build artifacts
+*.js
+*.d.ts
+*.js.map
