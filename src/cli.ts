@@ -7,7 +7,7 @@ import { generateTestSample } from './utils/testSamplerGenerator'
 const args = process.argv.slice(2)
 const className = args[0]
 const fileName = `${className}.ts`
-const filePath = findFileRecursively(process.cwd(), fileName)
+const filePath = findFilePath(process.cwd(), fileName)
 
 if (args.length !== 1 || (filePath && !fs.existsSync(filePath))) {
   console.error('Please provide a valid file name!')
@@ -37,19 +37,17 @@ try {
   process.exit(1)
 }
 
-function findFileRecursively(dir: string, filename: string): string | null {
-  const files = fs.readdirSync(dir);
+function findFilePath(dir: string, fileName: string) {
+  const files = fs.readdirSync(dir, { recursive: true })
 
   for (const file of files) {
-    const fullPath = path.join(dir, file);
+    const filePath = path.join(dir, file.toString())
+    const fileStat = fs.statSync(filePath)
 
-    if (fs.statSync(fullPath).isDirectory()) {
-      const result = findFileRecursively(fullPath, filename);
-      if (result) return result;
-    } else if (file === filename) {
-      return fullPath;
+    if (fileStat.isDirectory()) {
+      findFilePath(filePath, fileName)
+    } else if (file.toString().endsWith(fileName)) {
+      return filePath
     }
   }
-
-  return null;
 }
