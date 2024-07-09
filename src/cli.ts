@@ -8,13 +8,14 @@ const args = process.argv.slice(2)
 const className = args[0]
 const fileName = `${className}.ts`
 const filePath = findFilePath(process.cwd(), fileName)
+console.log(filePath)
 
 if (args.length !== 1 || (filePath && !fs.existsSync(filePath))) {
   console.error('Please provide a valid file name!')
   process.exit(1)
 }
 
-const content = fs.readFileSync(fileName, 'utf8')
+const content = fs.readFileSync(filePath!, { encoding: 'utf8' })
 
 try {
   const result = generateTestSample(content)
@@ -37,7 +38,7 @@ try {
   process.exit(1)
 }
 
-function findFilePath(dir: string, fileName: string) {
+function findFilePath(dir: string, fileName: string): string | undefined {
   const files = fs.readdirSync(dir, { recursive: true })
 
   for (const file of files) {
