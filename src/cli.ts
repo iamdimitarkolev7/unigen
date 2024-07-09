@@ -20,7 +20,7 @@ const content = fs.readFileSync(filePath!, { encoding: 'utf8' })
 try {
   const result = generateTestSample(content)
 
-  const testFolder = path.join(process.cwd(), '__tests__')
+  const testFolder = `${path.dirname(filePath!)}/__tests__`
   const testFileName = `${className}.spec.ts`
   let testFilePath = path.join(process.cwd(), testFileName)
 
