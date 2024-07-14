@@ -8,7 +8,7 @@ export const generateTestTemplate = (
   methods: IMethod[]
 ): string => {
   const dependencyImports = generateDependencyImports(dependencyImportPaths, className)
-  const mockInstances = dependencies.map(dep => `const ${lowerCaseFirstLetter(dep)} = mocker.createMockInstance(${dep})`).join('\n  ')
+  const mockInstances = dependencies.map(dep => `const ${lowerCaseFirstLetter(dep)} = mocker.createClassMockInstance(${dep})`).join('\n  ')
 
   const describeBlock = `describe('${className}', () => {
   const mocker = AutoMocker.createJestMocker(jest)

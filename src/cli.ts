@@ -39,6 +39,8 @@ try {
 }
 
 function findFilePath(dir: string, fileName: string): string | undefined {
+  if (dir.includes('dist') || dir.includes('node_modules') || dir.includes('data')) return
+
   const files = fs.readdirSync(dir, { recursive: true })
 
   for (const file of files) {
